@@ -1,0 +1,4 @@
+__pycache__
+*.pyc
+example/db.sqlite3
+.pytest_cache
