@@ -57,8 +57,55 @@ class RoutesTest(TestCase):
 
         self.assertIsNone(calculate_zero('|', 1, 2))
 
-    def test_method(self):
-        # Добавить обработчик URL обрабатывающий запросы GET и POST.
+    def test_articles(self):
+        # Добавить обработчики для архива статей:
         #
-        # При запросе GET функция должна
-        pass
+        # 1. Со списком всех статей (`articles/`),
+        #    возвращает названия статей разделенных переносом строки ('\n`)
+        # 2. С отдельной статьи (`articles/3/`),
+        #    возвращает название отдельной статьи, если она отсуствует - вернуть статус 404.
+        # 3. Со списком статей за отдельный год (`articles/archive/2012/`),
+        #    возвращает названия статей разделенных переносом строки ('\n`)
+        #
+        # Все шаблоны и обработчики URL должны находиться в пакете `blog.articles`.
+        #
+        # Данные для вывода находяться в словаре `ARTICLES` в модуле `blog.articles.models`.
+        response = self.client.get('/articles/')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.content, ('\n'.join([
+            'Заглавная статья',
+            'Вышел Python 3.6',
+            'Вышел Python 3.7'
+        ])).encode('utf-8'))
+
+        response = self.client.get('/articles/1/')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.content, 'Заглавная статья'.encode('utf-8'))
+
+        response = self.client.get('/articles/2/')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.content, 'Вышел Python 3.6'.encode('utf-8'))
+
+        response = self.client.get('/articles/3/')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.content, 'Вышел Python 3.7'.encode('utf-8'))
+
+        response = self.client.get('/articles/4/')
+        self.assertEqual(response.status_code, 404)
+
+        response = self.client.get('/articles/archive/2016/')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.content, b'')
+
+        response = self.client.get('/articles/archive/2017/')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.content, ('\n'.join([
+            'Заглавная статья',
+            'Вышел Python 3.6',
+        ])).encode('utf-8'))
+
+        response = self.client.get('/articles/archive/2018/')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.content, ('\n'.join([
+            'Вышел Python 3.7'
+        ])).encode('utf-8'))
