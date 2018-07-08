@@ -5,7 +5,6 @@ import urllib.parse
 from django.test import TestCase
 
 
-# Create your tests here.
 class RoutesTest(TestCase):
     def setUp(self):
         self.today = datetime.date.today().isoformat().encode('ascii')
@@ -20,15 +19,15 @@ class RoutesTest(TestCase):
         assert self.today in response.content
 
     def test_calculate(self):
-        # Добавить в наше приложение обработчик для URL'а `calculate` для проведения
-        # математических операций над двумя числами.
+        # Добавить в наше приложение обработчик для URL'а `calculate`
+        # для проведения математических операций над двумя числами.
         #
         # Аргументы передаются в запросе URL'е:
-        # - op - тип операции:
-        #   '+' - сложение
-        #   '-' - вычитание
-        #   '*' = умножения 
-        #   '/' = деление 
+        # - `op` - тип операции:
+        #   * '+' - сложение
+        #   * '-' - вычитание
+        #   * '*' = умножения
+        #   * '/' = деление
         # - `left` и `right` - операнды
         #
         # При ошибке (неизвестная операция или деление на 0) отправлять 400 статус
@@ -69,7 +68,8 @@ class RoutesTest(TestCase):
         #
         # Все шаблоны и обработчики URL должны находиться в пакете `blog.articles`.
         #
-        # Данные для вывода находяться в словаре `ARTICLES` в модуле `blog.articles.models`.
+        # Данные для вывода находяться в словаре `ARTICLES` в модуле
+        # `blog.articles.models`.
         response = self.client.get('/articles/')
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.content, ('\n'.join([
