@@ -6,11 +6,8 @@ from catalog.models import Article
 
 # Create your views here.
 def home(request: HttpRequest) -> HttpResponse:
-    raise RuntimeError
-    articles = Article.objects.all()
-    return render(request, 'index.html', {
-        'articles': articles
-    }, content_type='text/plain')
+    current_time = datetime.date.today().isoformat()
+    return HttpResponse(current_time, content_type='text/plain')
 
 def articles_list(request):
     return HttpResponse('Список статей')
