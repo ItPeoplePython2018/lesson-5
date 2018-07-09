@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpRequest, HttpResponse, Http404
-from articles.models import ARTICLES
+from blog.articles.models import ARTICLES
 
 
 # Create your views here.
