@@ -25,5 +25,26 @@ def articles_detail(request, id):
 def handler404(request, *args, **kwargs):
     return HttpResponse('Не найдено', status=404)
 
+def handler400(request, *args, **kwargs):
+    return HttpResponse('Неизвестная операция или деление на ноль', status=400)
+
 def articles_redirect(request):
     return redirect('articles_detail', id=10)
+
+@require_http_methods(['GET'])
+def calculate(request):
+    operation = request.GET['op']
+    left_oparand = int(request.GET['left'])
+    right_operand = int(request.GET['right'])
+    print(request.GET, operation, left_oparand, right_operand)
+    if operation == '+' or ' ':
+        result = left_oparand + right_operand
+    elif operation == '-':
+        result = left_oparand - right_operand
+    elif operation == '*':
+        result = left_oparand * right_operand
+    elif operation == '/' and right_operand != 0:
+        result = left_oparand / right_operand
+    else:
+        return handler400(request)
+    return HttpResponse(result)
