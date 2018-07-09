@@ -36,7 +36,7 @@ def calculate(request):
     operation = request.GET['op']
     left_oparand = int(request.GET['left'])
     right_operand = int(request.GET['right'])
-    if operation == '+' or ' ':
+    if operation in ('+', ' '):
         result = left_oparand + right_operand
     elif operation == '-':
         result = left_oparand - right_operand
