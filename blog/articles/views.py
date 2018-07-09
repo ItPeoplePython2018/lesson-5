@@ -5,6 +5,7 @@ from articles.models import ARTICLES
 
 # Create your views here.
 def show_all(request):
+    # shows all of the articles with \n as a delimeter
     return HttpResponse('\n'.join((article['title'] for article in ARTICLES)), content_type='text/plain; charset=utf-8')
 
 
