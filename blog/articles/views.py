@@ -1,7 +1,8 @@
 import datetime
 
-from django.http import HttpResponse, HttpRequest
+from django.http import HttpResponse, HttpRequest, Http404
 from django.views.decorators.http import require_http_methods
+from blog.articles.models import ARTICLES
 
 
 def home(request: HttpRequest) -> HttpResponse:
@@ -30,3 +31,24 @@ def calculate(request):
     else:
         return handler400(request)
     return HttpResponse(result)
+
+def show_all(request):
+    return HttpResponse('\n'.join((article['title'] for article in ARTICLES)), content_type='text/plain; charset=utf-8')
+
+
+def show_specified_article(request, id):
+    article_name = ''
+    for article in ARTICLES:
+        if article['id'] == id:
+            article_name = article['title']
+    if article_name:
+        return HttpResponse(article_name)
+    raise Http404
+
+
+def show_articles_by_year(request, year):
+    over_a_year_articles = '\n'.join((article['title'] for article in ARTICLES if article['year'] == year))
+    print(over_a_year_articles)
+    if over_a_year_articles:
+        return HttpResponse(over_a_year_articles, content_type='text/plain; charset=UTF-8')
+    raise Http404
