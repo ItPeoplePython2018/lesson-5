@@ -47,8 +47,4 @@ def show_specified_article(request, id):
 
 
 def show_articles_by_year(request, year):
-    over_a_year_articles = '\n'.join((article['title'] for article in ARTICLES if article['year'] == year))
-    print(over_a_year_articles)
-    if over_a_year_articles:
-        return HttpResponse(over_a_year_articles, content_type='text/plain; charset=UTF-8')
-    raise Http404
+    return HttpResponse('\n'.join((article['title'] for article in ARTICLES if article['year'] == year)))
