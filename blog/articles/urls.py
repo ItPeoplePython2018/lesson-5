@@ -1,5 +1,5 @@
 from django.urls import path
-from blog.articles.view import home
+from blog.articles.views import home
 from blog.articles.views import show_all, show_specified_article, show_articles_by_year
 
 urlpatterns = [
