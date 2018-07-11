@@ -35,11 +35,7 @@ def calculate(request: HttpRequest) -> HttpResponse:
         answer = operation_dict[op](int(left), int(right))
     else:
         return HttpResponse('Нет такой операции: {}'.format(op), status=400)
-
-
-    return render(request, 'index.html', {
-        'op': answer
-    }, content_type='html')
+    return HttpResponse('{}'.format(answer))
 
 def archiv (request: HttpRequest):
     rtrn = ''
