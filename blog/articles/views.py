@@ -50,8 +50,8 @@ def articles_num (request: HttpRequest, id):
     return HttpResponse('Нет такой страницы: {}'.format(id), status=404)
 
 def articles_year (request: HttpRequest, year):
-    rtrn = ''
+    rtrn = []
     for i in ARTICLES:
         if i['year'] == year:
-            rtrn += i['title']+'\n'
-    return HttpResponse(rtrn)
+            rtrn.append(i['title'])
+    return HttpResponse('\n'.join(rtrn))
