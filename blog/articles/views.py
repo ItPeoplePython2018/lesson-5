@@ -38,20 +38,15 @@ def calculate(request: HttpRequest) -> HttpResponse:
     return HttpResponse('{}'.format(answer))
 
 def archiv (request: HttpRequest):
-    rtrn = ''
+    rtrn = []
     for i in ARTICLES:
-        rtrn += i['title']+'\n'
-
-    return render(request, 'index.html', {
-        'op': rtrn
-    }, content_type='html')
+        rtrn.append(i['title'])
+    return HttpResponse('\n'.join(rtrn))
 
 def articles_num (request: HttpRequest, id):
     for i in ARTICLES:
         if i['id'] == id:
-            return render(request, 'index.html', {
-                'op': i['title'],
-            }, content_type='html')
+            return HttpResponse(i['title'])
     return HttpResponse('Нет такой страницы: {}'.format(id), status=404)
 
 def articles_year (request: HttpRequest, year):
@@ -59,6 +54,4 @@ def articles_year (request: HttpRequest, year):
     for i in ARTICLES:
         if i['year'] == year:
             rtrn += i['title']+'\n'
-    return render(request, 'index.html', {
-        'op': rtrn,
-    }, content_type='html')
+    return HttpResponse(rtrn)
