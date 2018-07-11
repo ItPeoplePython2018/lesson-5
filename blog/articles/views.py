@@ -40,7 +40,7 @@ def calculate(request: HttpRequest) -> HttpResponse:
 def archiv (request: HttpRequest):
     rtrn = ''
     for i in ARTICLES:
-        rtrn += '{}</p>'.format(i['title'])
+        rtrn += i['title']+'\n'
 
     return render(request, 'index.html', {
         'op': rtrn
@@ -58,7 +58,7 @@ def articles_year (request: HttpRequest, year):
     rtrn = ''
     for i in ARTICLES:
         if i['year'] == year:
-            rtrn += '{}</p>'.format(i['title'])
+            rtrn += i['title']+'\n'
     return render(request, 'index.html', {
         'op': rtrn,
     }, content_type='html')
