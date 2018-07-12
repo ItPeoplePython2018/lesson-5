@@ -11,5 +11,4 @@ urlpatterns = [
     path('articles/', archiv),  # для вывода архива
     path('articles/<int:id>/', articles_num, name='articles_num'), # для вывода статьи с номером
     path('articles/archive/<int:year>/', articles_year, name='articles_year'),  # для вывода статей по году
-
 ]
